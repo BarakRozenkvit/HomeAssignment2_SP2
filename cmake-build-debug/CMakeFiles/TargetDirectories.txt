@@ -1,0 +1,3 @@
+/Users/barakrozenkvit/eclipse-workspace/SoftwarePrograming_2/HomeAssignment2_SP2/cmake-build-debug/CMakeFiles/HomeAssignment2_SP2.dir
+/Users/barakrozenkvit/eclipse-workspace/SoftwarePrograming_2/HomeAssignment2_SP2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/barakrozenkvit/eclipse-workspace/SoftwarePrograming_2/HomeAssignment2_SP2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
