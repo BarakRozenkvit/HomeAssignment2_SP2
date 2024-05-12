@@ -1,16 +1,13 @@
 /Users/barakrozenkvit/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Users/barakrozenkvit/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/barakrozenkvit/eclipse-workspace/SoftwarePrograming_2/HomeAssignment2_SP2 -B /Users/barakrozenkvit/eclipse-workspace/SoftwarePrograming_2/HomeAssignment2_SP2/cmake-build-debug
--- The C compiler identification is AppleClang 15.0.0.15000309
--- The CXX compiler identification is AppleClang 15.0.0.15000309
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done (0.6s)
--- Generating done (0.0s)
--- Build files have been written to: /Users/barakrozenkvit/eclipse-workspace/SoftwarePrograming_2/HomeAssignment2_SP2/cmake-build-debug
+-- Configuring done (0.0s)
+CMake Error at CMakeLists.txt:6 (add_executable):
+  Cannot find source file:
+
+    main.cpp
+
+
+CMake Error at CMakeLists.txt:6 (add_executable):
+  No SOURCES given to target: HomeAssignment2_SP2
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
