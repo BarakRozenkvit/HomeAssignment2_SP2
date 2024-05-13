@@ -59,4 +59,17 @@ int main()
     {
         cout << e.what() << endl; // Should print "The number of columns in the first matrix must be equal to the number of rows in the second matrix."
     }
+
+
+
+
+    vector<vector<int>> weightedGraph1 = {
+            {0, 1, 1,9},
+            {1, 0, 2,3},
+            {1, 2, 0,0},
+            {1, 1 , 1, 0}
+    };
+    ariel::Graph g7;
+    g7.loadGraph(weightedGraph1);
+    g1>g7;
 }

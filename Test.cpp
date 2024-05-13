@@ -61,7 +61,7 @@ TEST_CASE("Invalid operations")
         {0, 1, 1, 1},
         {1, 0, 2, 1},
         {1, 2, 0, 1}};
-    g2.loadGraph(weightedGraph);
+    CHECK_THROWS(g2.loadGraph(weightedGraph));
     ariel::Graph g5;
     vector<vector<int>> graph2 = {
         {0, 1, 0, 0, 1},
@@ -84,3 +84,14 @@ TEST_CASE("Invalid operations")
     g6.loadGraph(graph3);
     CHECK_THROWS(g1 + g6);
 }
+
+TEST_CASE("+ / += / ++")
+{}
+TEST_CASE("- / -= / --")
+{}
+TEST_CASE("* / *=r / /=r")
+{}
+TEST_CASE("== / !=")
+{}
+TEST_CASE("<= / >= / > / <")
+{}

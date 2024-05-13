@@ -21,7 +21,7 @@ namespace ariel {
 
         void loadGraph(vector<vector<int>> graph);
 
-        void printGraph();
+        string printGraph();
 
         vector<vector<int>>& getAdjMatrix(){
             return _adjMatrix;
@@ -37,7 +37,6 @@ namespace ariel {
         }
         void addS();
 
-        // 6 Arithmetiacl
         Graph& operator+=(Graph &g);
         Graph& operator-=(Graph &g1);
         Graph& operator+();
@@ -45,7 +44,6 @@ namespace ariel {
         friend Graph operator+(Graph &g1,Graph &g2);
         friend Graph operator-(Graph &g1,Graph &g2);
 
-        // 6 Comperison
         friend bool operator>(Graph &g1,Graph &g2);
         friend bool operator>=(Graph &g1,Graph &g2);
         friend bool operator<(Graph &g1,Graph &g2);
@@ -53,19 +51,15 @@ namespace ariel {
         friend bool operator==(Graph &g1,Graph &g2);
         friend bool operator!=(Graph &g1,Graph &g2);
 
-        // Inc and Dec
         Graph& operator++();
         Graph& operator--();
 
-        // Multiply by Scalar
         Graph& operator*=(int n);
         Graph& operator/=(int n);
         friend Graph operator*(Graph &g,int n);
 
-        // Graph Multiplication
         friend Graph operator*(Graph &g1,Graph &g2);
 
-        // Output
         friend std::ostream& operator<<(std::ostream& out,Graph &g);
     };
 }

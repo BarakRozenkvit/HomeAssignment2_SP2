@@ -45,8 +45,30 @@ void Graph::loadGraph(vector <vector<int>> graph) {
     }
 }
 
-void Graph::printGraph() {
-    std::cout << "Graph with " << _adjMatrix.size() << " vertices and " << _edges << " edges." << std::endl;
+string Graph::printGraph() {
+    string result = "";
+    for(int i=0;i<_adjMatrix.size();i++){
+        result += "[";
+        for(int j=0;j<_adjMatrix[i].size();j++){
+            if(_adjMatrix[i][j] == INF){
+                result += "0";
+            }
+            else{
+                result += to_string(_adjMatrix[i][j]);
+            }
+
+            if(j!=_adjMatrix[i].size()-1){
+                result+=", ";
+            }
+        }
+        if(i!=_adjMatrix[i].size()-1){
+            result+="]\n";
+        }
+        else {
+            result += "]";
+        }
+    };
+    return result;
 }
 
 void Graph::addS(){
@@ -265,30 +287,27 @@ bool ariel::operator!=(Graph &g1, Graph &g2) {
     return !(g1==g2);
 }
 
+bool ariel::operator<=(Graph &g1, Graph &g2) {
+    return g1<g2 || g1==g2;
+}
 
+bool ariel::operator>=(Graph &g1, Graph &g2) {
+    return g1<g2 || g1==g2;
+}
 
+bool ariel::operator<(Graph &g1, Graph &g2) {
+    return false;
+}
+// TODO: what is the defenition of bigger g1>g2
+bool ariel::operator>(Graph &g1,Graph &g2){
+    return false;
+}
 
 std::ostream& ariel::operator<<(std::ostream& out,Graph &g){
-    string result = "";
-    for(int i=0;i<g.getAdjMatrix().size();i++){
-        result += "[";
-        for(int j=0;j<g.getAdjMatrix()[i].size();j++){
-            if(g.getAdjMatrix()[i][j] == INF){
-                result += "0";
-            }
-            else{
-                result += to_string(g.getAdjMatrix()[i][j]);
-            }
-
-            if(j!=g.getAdjMatrix()[i].size()-1){
-            result+=",";
-            }
-        }
-        result += "]\n";
-    }
-    out << result;
+    out << g.printGraph();
     return out;
 }
+
 
 
 
