@@ -298,7 +298,7 @@ bool ariel::operator>=(Graph &g1, Graph &g2) {
 bool ariel::operator<(Graph &g1, Graph &g2) {
     return false;
 }
-// TODO: what is the defenition of bigger g1>g2
+// TODO: what is the defenition of bigger
 bool ariel::operator>(Graph &g1,Graph &g2){
     return false;
 }
