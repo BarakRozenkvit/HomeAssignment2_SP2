@@ -10,7 +10,7 @@ SOURCES_TESTS= Graph.cpp Algorithms.cpp TestCounter.cpp Test.cpp
 OBJECTS=$(subst .cpp,.o,$(SOURCES))
 OBJECTS_TESTS = $(subst .cpp,.o,$(SOURCES_TESTS))
 
-run: demo
+runDemo: demo
 	./$^
 
 runTest: test

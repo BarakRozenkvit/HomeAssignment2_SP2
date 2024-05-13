@@ -36,26 +36,36 @@ namespace ariel {
             return _isNegativeEdges;
         }
         void addS();
-        // Print operators
-        // 1. <<
-        friend std::ostream& operator<<(std::ostream& out,Graph &g);
 
-        // Plus Operators
-        // 1. +
+        // 6 Arithmetiacl
+        Graph& operator+=(Graph &g);
+        Graph& operator-=(Graph &g1);
+        Graph& operator+();
+        Graph& operator-();
         friend Graph operator+(Graph &g1,Graph &g2);
-        // 2. +=
-        Graph& operator+=(Graph &g1);
-        // 3. ++
-        // 4. Plus Unary
+        friend Graph operator-(Graph &g1,Graph &g2);
 
-        // Minus Operators
-        // 1. -
-        // 2. -=
-        // 3. --
-        // Minus Unary
+        // 6 Comperison
+        friend bool operator>(Graph &g1,Graph &g2);
+        friend bool operator>=(Graph &g1,Graph &g2);
+        friend bool operator<(Graph &g1,Graph &g2);
+        friend bool operator<=(Graph &g1,Graph &g2);
+        friend bool operator==(Graph &g1,Graph &g2);
+        friend bool operator!=(Graph &g1,Graph &g2);
 
-        // Multiply Operators
-        // 1. *= Scalar
-        // 2. *
+        // Inc and Dec
+        Graph& operator++();
+        Graph& operator--();
+
+        // Multiply by Scalar
+        Graph& operator*=(int n);
+        Graph& operator/=(int n);
+        friend Graph operator*(Graph &g,int n);
+
+        // Graph Multiplication
+        friend Graph operator*(Graph &g1,Graph &g2);
+
+        // Output
+        friend std::ostream& operator<<(std::ostream& out,Graph &g);
     };
 }
