@@ -37,6 +37,8 @@ namespace ariel {
         }
         void addS();
 
+        void updateEdges();
+
         Graph& operator+=(Graph &g);
         Graph& operator-=(Graph &g1);
         Graph& operator+();

@@ -38,7 +38,7 @@ void Graph::loadGraph(vector <vector<int>> graph) {
 
     for(int i=0; i < _adjMatrix.size(); i++) {
         for (int j = 0; j < _adjMatrix[i].size(); j++) {
-            if(i!=j && _adjMatrix[i][j] == 0 || _adjMatrix[i][j] == -INF){
+            if(i!=j && _adjMatrix[i][j] == 0){
                 _adjMatrix[i][j] = INF;
             }
         }
@@ -71,13 +71,13 @@ string Graph::printGraph() {
     return result;
 }
 
-void Graph::addS(){
-    vector<vector<int>> new_mat(_adjMatrix.size()+1,vector<int>(_adjMatrix.size()+1));
-    for(int i=0;i<new_mat.size();i++) {
+void Graph::addS() {
+    vector<vector<int>> new_mat(_adjMatrix.size() + 1, vector<int>(_adjMatrix.size() + 1));
+    for (int i = 0; i < new_mat.size(); i++) {
         for (int j = 0; j < new_mat.size(); j++) {
-            if(i==new_mat.size() -1 ){new_mat[i][j] = 0;}
-            else if(j==new_mat.size() - 1){new_mat[i][j] = INF;}
-            else{new_mat[i][j] = _adjMatrix[i][j];}
+            if (i == new_mat.size() - 1) { new_mat[i][j] = 0; }
+            else if (j == new_mat.size() - 1) { new_mat[i][j] = INF; }
+            else { new_mat[i][j] = _adjMatrix[i][j]; }
         }
     }
     new_mat[new_mat.size() - 1][new_mat.size() - 1] = 0;
@@ -86,7 +86,7 @@ void Graph::addS(){
 
 Graph& Graph::operator+=(Graph& g){
     if(_adjMatrix.size() != g.getAdjMatrix().size()){
-        throw invalid_argument("Graphs Vertics number don't match");
+        throw invalid_argument("The size of the first matrix must be equal to the size of the second matrix.");
     }
     for(int i=0;i<_adjMatrix.size();i++){
         for(int j=0;j<_adjMatrix.size();j++){
@@ -96,17 +96,17 @@ Graph& Graph::operator+=(Graph& g){
             int thisVal = _adjMatrix[i][j];
             if(gVal == INF){gVal=0;}
             if(thisVal == INF){thisVal=0;}
-
-            if(thisVal + gVal == 0){_adjMatrix[i][j] = INF;}
-            else{_adjMatrix[i][j] = thisVal + gVal;}
+            _adjMatrix[i][j] = thisVal + gVal;
         }
     }
+
+    this->loadGraph(_adjMatrix);
     return *this;
 }
 
 Graph& Graph::operator-=(Graph& g){
     if(_adjMatrix.size() != g.getAdjMatrix().size()){
-        throw invalid_argument("Graphs Vertics number don't match");
+        throw invalid_argument("The size of the first matrix must be equal to the size of the second matrix.");
     }
     for(int i=0;i<_adjMatrix.size();i++){
         for(int j=0;j<_adjMatrix.size();j++){
@@ -116,11 +116,10 @@ Graph& Graph::operator-=(Graph& g){
             int thisVal = _adjMatrix[i][j];
             if(gVal == INF){gVal=0;}
             if(thisVal == INF){thisVal=0;}
-
-            if(thisVal - gVal == 0){_adjMatrix[i][j] = INF;}
-            else{_adjMatrix[i][j] = thisVal - gVal;}
+            _adjMatrix[i][j] = thisVal - gVal;
         }
     }
+    this->loadGraph(_adjMatrix);
     return *this;
 }
 
@@ -134,7 +133,7 @@ Graph& Graph::operator-() {
 
 Graph ariel::operator+(Graph &g1,Graph &g2){
     if(g1.getAdjMatrix().size() != g2.getAdjMatrix().size()){
-        throw invalid_argument("number of Vertices is not equal");
+        throw invalid_argument("The size of the first matrix must be equal to the size of the second matrix.");
     }
 
     vector<vector<int>> newMat(g1.getAdjMatrix().size(),vector<int>(g1.getAdjMatrix().size()));
@@ -154,7 +153,7 @@ Graph ariel::operator+(Graph &g1,Graph &g2){
 
 Graph ariel::operator-(Graph &g1,Graph &g2){
     if(g1.getAdjMatrix().size() != g2.getAdjMatrix().size()){
-        throw invalid_argument("number of Vertices is not equal");
+        throw invalid_argument("The size of the first matrix must be equal to the size of the second matrix.");
     }
 
     vector<vector<int>> newMat(g1.getAdjMatrix().size(),vector<int>(g1.getAdjMatrix().size()));
@@ -178,11 +177,10 @@ Graph& Graph::operator++() {
             if(i==j){continue;}
             int thisVal = _adjMatrix[i][j];
             if(_adjMatrix[i][j]==INF){thisVal = 0;}
-
-            if(thisVal + 1 == 0){_adjMatrix[i][j] = INF;}
-            else{_adjMatrix[i][j] = thisVal + 1;}
+            _adjMatrix[i][j] = thisVal + 1;
         }
     }
+    this->loadGraph(_adjMatrix);
     return *this;
 }
 
@@ -192,11 +190,10 @@ Graph& Graph::operator--() {
             if(i==j){continue;}
             int thisVal = _adjMatrix[i][j];
             if(_adjMatrix[i][j]==INF){thisVal = 0;}
-
-            if(thisVal - 1 == 0){_adjMatrix[i][j] = INF;}
-            else{_adjMatrix[i][j] = thisVal - 1;}
+            _adjMatrix[i][j] = thisVal - 1;
         }
     }
+    this->loadGraph(_adjMatrix);
     return *this;
 }
 
@@ -206,11 +203,11 @@ Graph& Graph::operator*=(int n) {
             if(i==j){continue;}
             int thisVal = _adjMatrix[i][j];
             if(_adjMatrix[i][j]==INF){thisVal = 0;}
+            _adjMatrix[i][j] = thisVal * n;
 
-            if(thisVal * n == 0){_adjMatrix[i][j] = INF;}
-            else{_adjMatrix[i][j] = thisVal * n;}
         }
     }
+    this->loadGraph(_adjMatrix);
     return *this;
 }
 
@@ -220,11 +217,10 @@ Graph& Graph::operator/=(int n) {
             if(i==j){continue;}
             int thisVal = _adjMatrix[i][j];
             if(_adjMatrix[i][j]==INF){thisVal = 0;}
-
-            if(thisVal / n == 0){_adjMatrix[i][j] = INF;}
-            else{_adjMatrix[i][j] = thisVal / n;}
+            _adjMatrix[i][j] = thisVal / n;
         }
     }
+    this->loadGraph(_adjMatrix);
     return *this;
 }
 
@@ -296,43 +292,33 @@ bool ariel::operator>=(Graph &g1, Graph &g2) {
 }
 
 bool ariel::operator<(Graph &g1, Graph &g2) {
-    if(g1.getAdjMatrix().size() >= g2.getAdjMatrix().size()){
-        return false;
-    }
-    for(int k=0;k<=g2.getAdjMatrix().size()-g1.getAdjMatrix().size();k++) {
-        bool result = true;
-        for (int i = 0; i < g1.getAdjMatrix().size() && result; i++) {
-            for (int j = 0; j < g1.getAdjMatrix()[i].size() && result; j++) {
-                if (g2.getAdjMatrix()[i + k][j+k] != g1.getAdjMatrix()[i][j]) {
-                    result = false;
-                }
-            }
-        }
-        if(result){return true;}
-    }
-
-    if(g1.getEdges() < g2.getEdges()){return true;}
-
-    return false;
+    return g2>g1;
 }
 
 bool ariel::operator>(Graph &g1,Graph &g2){
-    if(g2.getAdjMatrix().size() >= g1.getAdjMatrix().size()){
+    if(g2.getAdjMatrix().size() > g1.getAdjMatrix().size()){
         return false;
     }
-    for(int k=0;k<=g1.getAdjMatrix().size()-g2.getAdjMatrix().size();k++) {
-        bool result = true;
-        for (int i = 0; i < g2.getAdjMatrix().size() && result; i++) {
-            for (int j = 0; j < g2.getAdjMatrix()[i].size() && result; j++) {
-                if (g1.getAdjMatrix()[i + k][j+k] != g2.getAdjMatrix()[i][j]) {
-                    result = false;
+    // Only check this of matrix sizes are different
+    if(g1.getAdjMatrix().size()!=g2.getAdjMatrix().size()) {
+        bool isSubMatrix;
+        for (int k = 0; k <= g1.getAdjMatrix().size() - g2.getAdjMatrix().size(); k++) {
+            isSubMatrix = true;
+            for (int i = 0; i < g2.getAdjMatrix().size(); i++) {
+                for (int j = 0; j < g2.getAdjMatrix()[i].size(); j++) {
+                    if (g1.getAdjMatrix()[i + k][j + k] != g2.getAdjMatrix()[i][j]) {
+                        isSubMatrix = false;
+                    }
                 }
             }
+            // Check if subMatrix
+            if (isSubMatrix) {return true;}
         }
-        if(result){return true;}
     }
 
-    if(g2.getEdges() < g1.getEdges()){return true;}
+    if(g1.getEdges() > g2.getEdges()){return true;}
+
+    if(g1.getAdjMatrix().size() > g2.getAdjMatrix().size()){return true;}
 
     return false;
 }
