@@ -292,14 +292,48 @@ bool ariel::operator<=(Graph &g1, Graph &g2) {
 }
 
 bool ariel::operator>=(Graph &g1, Graph &g2) {
-    return g1<g2 || g1==g2;
+    return g1>g2 || g1==g2;
 }
 
 bool ariel::operator<(Graph &g1, Graph &g2) {
+    if(g1.getAdjMatrix().size() >= g2.getAdjMatrix().size()){
+        return false;
+    }
+    for(int k=0;k<=g2.getAdjMatrix().size()-g1.getAdjMatrix().size();k++) {
+        bool result = true;
+        for (int i = 0; i < g1.getAdjMatrix().size() && result; i++) {
+            for (int j = 0; j < g1.getAdjMatrix()[i].size() && result; j++) {
+                if (g2.getAdjMatrix()[i + k][j+k] != g1.getAdjMatrix()[i][j]) {
+                    result = false;
+                }
+            }
+        }
+        if(result){return true;}
+    }
+
+    if(g1.getEdges() < g2.getEdges()){return true;}
+
     return false;
 }
-// TODO: what is the defenition of bigger
+
 bool ariel::operator>(Graph &g1,Graph &g2){
+    if(g2.getAdjMatrix().size() >= g1.getAdjMatrix().size()){
+        return false;
+    }
+    for(int k=0;k<=g1.getAdjMatrix().size()-g2.getAdjMatrix().size();k++) {
+        bool result = true;
+        for (int i = 0; i < g2.getAdjMatrix().size() && result; i++) {
+            for (int j = 0; j < g2.getAdjMatrix()[i].size() && result; j++) {
+                if (g1.getAdjMatrix()[i + k][j+k] != g2.getAdjMatrix()[i][j]) {
+                    result = false;
+                }
+            }
+        }
+        if(result){return true;}
+    }
+
+    if(g2.getEdges() < g1.getEdges()){return true;}
+
     return false;
 }
 

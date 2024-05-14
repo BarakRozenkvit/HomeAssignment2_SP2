@@ -94,4 +94,25 @@ TEST_CASE("* / *=r / /=r")
 TEST_CASE("== / !=")
 {}
 TEST_CASE("<= / >= / > / <")
-{}
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+            {0, 5, 5, 5, 0},
+            {0, 0, 6, 0, 0},
+            {0, 0, 0, 5, 0},
+            {0, 0, 0, 0, 0},
+            {0, 5, 0, 0, 0}
+
+    };
+    g1.loadGraph(graph);
+    ariel::Graph g2;
+    vector<vector<int>> weightedGraph = {
+            {0, 5, 5, 5},
+            {0, 0, 0, 0},
+            {0, 0, 0, 5},
+            {0, 0, 0, 0} ,
+
+    };
+    g2.loadGraph(weightedGraph);
+    g1>g2;
+}
