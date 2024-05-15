@@ -16,7 +16,7 @@ namespace ariel {
 
 
     public:
-
+        // TODO: Intialization List
         Graph();
 
         void loadGraph(vector<vector<int>> graph);
@@ -37,31 +37,37 @@ namespace ariel {
         }
         void addS();
 
-        void updateEdges();
-
         Graph& operator+=(Graph &g);
         Graph& operator-=(Graph &g1);
+
         Graph& operator+();
         Graph& operator-();
-        friend Graph operator+(Graph &g1,Graph &g2);
-        friend Graph operator-(Graph &g1,Graph &g2);
 
-        friend bool operator>(Graph &g1,Graph &g2);
-        friend bool operator>=(Graph &g1,Graph &g2);
-        friend bool operator<(Graph &g1,Graph &g2);
-        friend bool operator<=(Graph &g1,Graph &g2);
-        friend bool operator==(Graph &g1,Graph &g2);
-        friend bool operator!=(Graph &g1,Graph &g2);
+        Graph operator+(Graph &g1);
+        //friend Graph operator+(Graph &g1,Graph &g2);
+        Graph operator-(Graph &g1);
 
+        bool operator>(Graph &g2);
+        bool operator>=(Graph &g2);
+        bool operator<(Graph &g2);
+        bool operator<=(Graph &g2);
+        bool operator==(Graph &g2);
+        bool operator!=(Graph &g2);
+        //++g && --g
         Graph& operator++();
         Graph& operator--();
+        //g++ && g--
+        Graph operator++(int);
+        Graph operator--(int);
 
         Graph& operator*=(int n);
         Graph& operator/=(int n);
-        friend Graph operator*(Graph &g,int n);
+        Graph operator*(int n);
 
-        friend Graph operator*(Graph &g1,Graph &g2);
+        Graph operator*(Graph &g1);
 
         friend std::ostream& operator<<(std::ostream& out,Graph &g);
     };
+
+
 }

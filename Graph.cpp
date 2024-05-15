@@ -131,8 +131,8 @@ Graph& Graph::operator-() {
     return *this*=-1;
 }
 
-Graph ariel::operator+(Graph &g1,Graph &g2){
-    if(g1.getAdjMatrix().size() != g2.getAdjMatrix().size()){
+Graph Graph::operator+(Graph &g1){
+    if(g1.getAdjMatrix().size() != this->getAdjMatrix().size()){
         throw invalid_argument("The size of the first matrix must be equal to the size of the second matrix.");
     }
 
@@ -140,7 +140,7 @@ Graph ariel::operator+(Graph &g1,Graph &g2){
     for(int i=0;i<newMat.size();i++){
         for(int j=0;j<newMat[i].size();j++){
             int g1val = g1.getAdjMatrix()[i][j];
-            int g2val = g2.getAdjMatrix()[i][j];
+            int g2val = this->getAdjMatrix()[i][j];
             if(g1val == INF){g1val = 0;}
             if(g2val == INF){g2val = 0;}
             newMat[i][j] = g1val + g2val;
@@ -151,8 +151,8 @@ Graph ariel::operator+(Graph &g1,Graph &g2){
     return gRes;
 }
 
-Graph ariel::operator-(Graph &g1,Graph &g2){
-    if(g1.getAdjMatrix().size() != g2.getAdjMatrix().size()){
+Graph Graph::operator-(Graph &g1){
+    if(g1.getAdjMatrix().size() != this->getAdjMatrix().size()){
         throw invalid_argument("The size of the first matrix must be equal to the size of the second matrix.");
     }
 
@@ -160,7 +160,7 @@ Graph ariel::operator-(Graph &g1,Graph &g2){
     for(int i=0;i<newMat.size();i++){
         for(int j=0;j<newMat[i].size();j++){
             int g1val = g1.getAdjMatrix()[i][j];
-            int g2val = g2.getAdjMatrix()[i][j];
+            int g2val = this->getAdjMatrix()[i][j];
             if(g1val == INF){g1val = 0;}
             if(g2val == INF){g2val = 0;}
             newMat[i][j] = g1val - g2val;
@@ -176,7 +176,7 @@ Graph& Graph::operator++() {
         for(int j=0;j<_adjMatrix.size();j++){
             if(i==j){continue;}
             int thisVal = _adjMatrix[i][j];
-            if(_adjMatrix[i][j]==INF){thisVal = 0;}
+            if(_adjMatrix[i][j]==INF){ continue;}
             _adjMatrix[i][j] = thisVal + 1;
         }
     }
@@ -184,17 +184,55 @@ Graph& Graph::operator++() {
     return *this;
 }
 
+Graph Graph::operator++(int n){
+    vector<vector<int>> newMat(this->_adjMatrix.size(),vector<int>(this->_adjMatrix.size()));
+    for(int i=0;i<_adjMatrix.size();i++){
+        for(int j=0;j<_adjMatrix.size();j++){
+            if(i==j){continue;}
+            int thisVal = _adjMatrix[i][j];
+            if(_adjMatrix[i][j]==INF){
+                newMat[i][j]=0;
+                continue;
+            }
+            newMat[i][j] = thisVal;
+            _adjMatrix[i][j] = thisVal + 1;
+        }
+    }
+    Graph gRes;
+    gRes.loadGraph(newMat);
+    return gRes;
+}
+
 Graph& Graph::operator--() {
     for(int i=0;i<_adjMatrix.size();i++){
         for(int j=0;j<_adjMatrix.size();j++){
             if(i==j){continue;}
             int thisVal = _adjMatrix[i][j];
-            if(_adjMatrix[i][j]==INF){thisVal = 0;}
+            if(_adjMatrix[i][j]==INF){ continue;}
             _adjMatrix[i][j] = thisVal - 1;
         }
     }
     this->loadGraph(_adjMatrix);
     return *this;
+}
+
+Graph Graph::operator--(int n){
+    vector<vector<int>> newMat(this->_adjMatrix.size(),vector<int>(this->_adjMatrix.size()));
+    for(int i=0;i<_adjMatrix.size();i++){
+        for(int j=0;j<_adjMatrix.size();j++){
+            if(i==j){continue;}
+            int thisVal = _adjMatrix[i][j];
+            if(_adjMatrix[i][j]==INF){
+                newMat[i][j]=0;
+                continue;
+            }
+            newMat[i][j] = thisVal;
+            _adjMatrix[i][j] = thisVal - 1;
+        }
+    }
+    Graph gRes;
+    gRes.loadGraph(newMat);
+    return gRes;
 }
 
 Graph& Graph::operator*=(int n) {
@@ -224,8 +262,8 @@ Graph& Graph::operator/=(int n) {
     return *this;
 }
 
-Graph ariel::operator*(Graph &g1,Graph &g2) {
-    if(g1.getAdjMatrix().size() != g2.getAdjMatrix().size()){
+Graph Graph::operator*(Graph &g1) {
+    if(g1.getAdjMatrix().size() != this->getAdjMatrix().size()){
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
     vector<vector<int>> newMat(g1.getAdjMatrix().size(),vector<int>(g1.getAdjMatrix().size()));
@@ -237,8 +275,8 @@ Graph ariel::operator*(Graph &g1,Graph &g2) {
             }
             int res = 0;
             for(int p=0;p<newMat.size();p++){
-                int g1val = g1.getAdjMatrix()[i][p];
-                int g2val = g2.getAdjMatrix()[p][j];
+                int g1val = this->getAdjMatrix()[i][p];
+                int g2val = g1.getAdjMatrix()[p][j];
                 if(g1val == INF){g1val = 0;}
                 if(g2val == INF){g2val = 0;}
                 res += g1val * g2val;
@@ -251,11 +289,11 @@ Graph ariel::operator*(Graph &g1,Graph &g2) {
     return gRes;
 }
 
-Graph ariel::operator*(Graph &g, int n) {
-    vector<vector<int>> newMat(g.getAdjMatrix().size(),vector<int>(g.getAdjMatrix().size()));
+Graph Graph::operator*(int n) {
+    vector<vector<int>> newMat(this->getAdjMatrix().size(),vector<int>(this->getAdjMatrix().size()));
     for(int i=0;i<newMat.size();i++) {
         for (int j = 0; j < newMat[i].size(); j++) {
-            int gVal = g.getAdjMatrix()[i][j];
+            int gVal = this->getAdjMatrix()[i][j];
             if (gVal == INF) { gVal = 0; }
             newMat[i][j] = gVal * n;
         }
@@ -265,13 +303,13 @@ Graph ariel::operator*(Graph &g, int n) {
     return gRes;
 }
 
-bool ariel::operator==(Graph &g1, Graph &g2) {
-    if(g1.getAdjMatrix().size() != g2.getAdjMatrix().size()){
+bool Graph::operator==(Graph &g2) {
+    if(this->getAdjMatrix().size() != g2.getAdjMatrix().size()){
         return false;
     }
-    for(int i=0;i<g1.getAdjMatrix().size();i++){
-        for(int j=0;j<g1.getAdjMatrix()[i].size();j++){
-            if(g1.getAdjMatrix()[i][j] != g2.getAdjMatrix()[i][j]){
+    for(int i=0;i<this->getAdjMatrix().size();i++){
+        for(int j=0;j<this->getAdjMatrix()[i].size();j++){
+            if(this->getAdjMatrix()[i][j] != g2.getAdjMatrix()[i][j]){
                 return false;
             }
         }
@@ -279,34 +317,34 @@ bool ariel::operator==(Graph &g1, Graph &g2) {
     return true;
 }
 
-bool ariel::operator!=(Graph &g1, Graph &g2) {
-    return !(g1==g2);
+bool Graph::operator!=(Graph &g2) {
+    return !(*this == g2);
 }
 
-bool ariel::operator<=(Graph &g1, Graph &g2) {
-    return g1<g2 || g1==g2;
+bool Graph::operator<=(Graph &g2) {
+    return *this<g2 || *this==g2;
 }
 
-bool ariel::operator>=(Graph &g1, Graph &g2) {
-    return g1>g2 || g1==g2;
+bool Graph::operator>=(Graph &g2) {
+    return *this>g2 || *this==g2;
 }
 
-bool ariel::operator<(Graph &g1, Graph &g2) {
-    return g2>g1;
+bool Graph::operator<(Graph &g2) {
+    return g2>*this;
 }
 
-bool ariel::operator>(Graph &g1,Graph &g2){
-    if(g2.getAdjMatrix().size() > g1.getAdjMatrix().size()){
+bool Graph::operator>(Graph &g2){
+    if(g2.getAdjMatrix().size() > this->getAdjMatrix().size()){
         return false;
     }
     // Only check this of matrix sizes are different
-    if(g1.getAdjMatrix().size()!=g2.getAdjMatrix().size()) {
+    if(this->getAdjMatrix().size()!=g2.getAdjMatrix().size()) {
         bool isSubMatrix;
-        for (int k = 0; k <= g1.getAdjMatrix().size() - g2.getAdjMatrix().size(); k++) {
+        for (int k = 0; k <= this->getAdjMatrix().size() - g2.getAdjMatrix().size(); k++) {
             isSubMatrix = true;
             for (int i = 0; i < g2.getAdjMatrix().size(); i++) {
                 for (int j = 0; j < g2.getAdjMatrix()[i].size(); j++) {
-                    if (g1.getAdjMatrix()[i + k][j + k] != g2.getAdjMatrix()[i][j]) {
+                    if (this->getAdjMatrix()[i + k][j + k] != g2.getAdjMatrix()[i][j]) {
                         isSubMatrix = false;
                     }
                 }
@@ -316,9 +354,9 @@ bool ariel::operator>(Graph &g1,Graph &g2){
         }
     }
 
-    if(g1.getEdges() > g2.getEdges()){return true;}
+    if(this->getEdges() > g2.getEdges()){return true;}
 
-    if(g1.getAdjMatrix().size() > g2.getAdjMatrix().size()){return true;}
+    if(this->getAdjMatrix().size() > g2.getAdjMatrix().size()){return true;}
 
     return false;
 }
