@@ -116,11 +116,15 @@ TEST_CASE("Test Operators: + , += , ++ , -- , - , -=")
           "[0, 0, 0, -5, 0]\n[2, 0, 2, -99, 3]\n[0, 0, 0, 2, -21]\n[0, 0, 0, 0, 0]\n[2, -88, 2, 0, 0]");
     -g1;
     CHECK(g1.printGraph() ==
-          "[0, 0, 0, 5, 0]\n[-2, 0, -2, 99, -3]\n[0, 0, 0, -2, 21]\n[0, 0, 0, 0, 0]\n[-2, 88, -2, 0, 0]");
+          "[0, 0, 0, -5, 0]\n[2, 0, 2, -99, 3]\n[0, 0, 0, 2, -21]\n[0, 0, 0, 0, 0]\n[2, -88, 2, 0, 0]");
 
     ariel::Graph f = g1--;
     CHECK(g1.printGraph() ==
-          "[0, 0, 0, 4, 0]\n[-3, 0, -3, 98, -4]\n[0, 0, 0, -3, 20]\n[0, 0, 0, 0, 0]\n[-3, 87, -3, 0, 0]");
+          "[0, 0, 0, -6, 0]\n"
+          "[1, 0, 1, -100, 2]\n"
+          "[0, 0, 0, 1, -22]\n"
+          "[0, 0, 0, 0, 0]\n"
+          "[1, -89, 1, 0, 0]");
 
     CHECK(f.printGraph() != g1.printGraph());
     --f;
@@ -135,10 +139,14 @@ TEST_CASE("Test Operators: + , += , ++ , -- , - , -=")
             {-3, 87, -3, -2, 0}
     };
     g4.loadGraph(gM2);
-    -g4;
-    ariel::Graph g5 = g4 + g1;
+    ariel::Graph g10 = -g4;
+    ariel::Graph g5 = g10 + g1;
     CHECK(g5.printGraph() ==
-            "[0, 2, 2, 0, 2]\n[0, 0, 0, 0, 0]\n[2, 2, 0, 0, 0]\n[2, 2, 2, 0, 2]\n[0, 0, 0, 2, 0]");
+            "[0, 2, 2, -10, 2]\n"
+            "[4, 0, 4, -198, 6]\n"
+            "[2, 2, 0, 4, -42]\n"
+            "[2, 2, 2, 0, 2]\n"
+            "[4, -176, 4, 2, 0]");
 }
 TEST_CASE("Test Operators: * , *=r , /=r")
 {
@@ -240,6 +248,208 @@ TEST_CASE("Test Operators: <= , >= , > , < , != , ==")
     CHECK_FALSE(g5>g5);
     CHECK_FALSE(g5<g5);
     CHECK(g5==g5);
+
+
+
+}
+TEST_CASE("Test All Operators")
+{
+    ariel::Graph g0;
+    vector<vector<int>> m0 = {
+            {0, 0, 0},
+            {0, 0, 0},
+            {0, 0, 0}
+    };
+    g0.loadGraph(m0);
+    ariel::Graph g1;
+    vector<vector<int>> m1 = {
+            {0, 0, 0},
+            {-2, 0, 3},
+            {0, 0, 0}
+    };
+    g1.loadGraph(m1);
+    ariel::Graph g2 = g0 + g1;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                             "[-2, 0, 3]\n"
+                             "[0, 0, 0]");
+    g2 = g2 - g2;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                            "[0, 0, 0]\n"
+                            "[0, 0, 0]");
+    g2 = g2 * g2;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                             "[0, 0, 0]\n"
+                             "[0, 0, 0]");
+    g2 = g0 * g1;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                             "[0, 0, 0]\n"
+                             "[0, 0, 0]");
+    g2 = g1 * 16;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                              "[-32, 0, 48]\n"
+                              "[0, 0, 0]");
+    g2 = g1++;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                             "[-2, 0, 3]\n"
+                             "[0, 0, 0]");
+    g2 = g1--;
+    CHECK(g2.printGraph() == "[0, 0, 0]\n"
+                             "[-1, 0, 4]\n"
+                             "[0, 0, 0]");
+    CHECK(g1.printGraph() == "[0, 0, 0]\n"
+                             "[-2, 0, 3]\n"
+                             "[0, 0, 0]");
+    ariel::Graph g3;
+    vector<vector<int>> m3 = {
+            {0, 5, 0},
+            {-2, 0, 3},
+            {7, 0, 0}
+    };
+    g3.loadGraph(m3);
+    g1+=g3;
+    CHECK(g1.printGraph() == "[0, 5, 0]\n"
+                             "[-4, 0, 6]\n"
+                             "[7, 0, 0]");
+    g1-=g1;
+    CHECK(g1.printGraph() == "[0, 0, 0]\n"
+                             "[0, 0, 0]\n"
+                             "[0, 0, 0]");
+    g1=-g3;
+    CHECK(g3.printGraph() == "[0, 5, 0]\n"
+                             "[-2, 0, 3]\n"
+                             "[7, 0, 0]");
+    CHECK(g1.printGraph() == "[0, -5, 0]\n"
+                             "[2, 0, -3]\n"
+                             "[-7, 0, 0]");
+    ++g3;++g3;
+    CHECK(g3.printGraph() == "[0, 7, 0]\n"
+                             "[0, 0, 5]\n"
+                             "[9, 0, 0]");
+    --g3;
+    CHECK(g3.printGraph() == "[0, 6, 0]\n"
+                             "[0, 0, 4]\n"
+                             "[8, 0, 0]");
+    g3*=3;
+    CHECK(g3.printGraph() == "[0, 18, 0]\n"
+                             "[0, 0, 12]\n"
+                             "[24, 0, 0]");
+    g3/=2;
+    CHECK(g3.printGraph() == "[0, 9, 0]\n"
+                             "[0, 0, 6]\n"
+                             "[12, 0, 0]");
+
+    bool res = g3 == g2;
+    CHECK_FALSE(g3 == g2);
+    CHECK(g3 != g2);
+    CHECK(g3 > g2);
+    CHECK(g3 >= g2);
+
+    ariel::Graph g5;
+    vector<vector<int>> m5 = {
+            {0, 6},
+            {1, 0}
+    };
+    g5.loadGraph(m5);
+
+    CHECK(g2 > g5);
+    CHECK(g3 > g5);
+
+    ariel::Graph g6;
+    vector<vector<int>> m6 = {
+            {0, 0, 8},
+            {0, 0, 0},
+            {0, 0, 0}
+    };
+    g6.loadGraph(m6);
+
+    CHECK(g6 > g5);
+    CHECK_FALSE(g6 < g5);
+
+    ariel::Graph g7;
+    vector<vector<int>> m7 = {
+            {0, 8},
+            {0, 0}
+    };
+    g7.loadGraph(m7);
+    CHECK(g6 > g7);
+
+    ariel::Graph g8;
+    vector<vector<int>> m8 = {
+            {0, 5},
+            {0, 0}
+    };
+    g8.loadGraph(m8);
+
+    ariel::Graph g9;
+    vector<vector<int>> m9 = {
+            {0, 0, 5},
+            {1, 0, 0},
+            {3, 1, 0}
+    };
+    g9.loadGraph(m9);
+
+    ariel::Graph g9B;
+    vector<vector<int>> m9B = {
+            {0, 0, 3, 1},
+            {0, 0, 0, 9},
+            {0, 5, 0, 9},
+            {0, 0 ,6, 0}
+    };
+    g9B.loadGraph(m9B);
+
+    ariel::Graph g9C;
+    vector<vector<int>> m9C = {
+            {0, 0, 3, 1},
+            {0, 0, 5, 9},
+            {1, 0, 0, 9},
+            {3, 1 ,0, 0}
+    };
+    g9C.loadGraph(m9C);
+
+    ariel::Graph g9D;
+    vector<vector<int>> m9D = {
+            {0, 0, 3, 1},
+            {0, 0, 5, 9},
+            {1, 0, 0, 9},
+            {3, 1 ,1, 0}
+    };
+    g9D.loadGraph(m9D);
+
+    CHECK(g9 > g8);
+    CHECK(g9B > g8);
+    CHECK(g9C > g9);
+    CHECK(g9D > g9B);
+
+    ariel::Graph g10;
+    vector<vector<int>> m10 = {
+            {0, 3},
+            {1, 0}
+    };
+    g10.loadGraph(m10);
+
+    ariel::Graph g11;
+    vector<vector<int>> m11 = {
+            {0, 4, 3},
+            {1, 0, -7},
+            {0, 6, 0}
+    };
+    g11.loadGraph(m11);
+    CHECK(g11>g10);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

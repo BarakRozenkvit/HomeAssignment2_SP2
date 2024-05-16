@@ -40,11 +40,11 @@ namespace ariel {
         Graph& operator+=(Graph &g);
         Graph& operator-=(Graph &g1);
 
-        Graph& operator+();
-        Graph& operator-();
+        Graph operator+();
+        Graph operator-();
 
-        Graph operator+(Graph &g1);
-        Graph operator-(Graph &g1);
+        Graph operator+(Graph &g);
+        Graph operator-(Graph &g);
 
         bool operator>(Graph &g2);
         bool operator>=(Graph &g2);
