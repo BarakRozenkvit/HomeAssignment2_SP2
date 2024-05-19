@@ -1,5 +1,6 @@
 //// @author:314638669, Barak10101998@gmail.com
 #include <vector>
+#include <string>
 #pragma once
 #define INF INT32_MAX
 
