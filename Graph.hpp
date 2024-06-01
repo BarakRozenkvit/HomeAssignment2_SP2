@@ -64,7 +64,7 @@ namespace ariel {
 
         Graph operator*(Graph &g1);
 
-        friend std::ostream& ariel::operator<<(std::ostream& out,Graph &g);
+        friend std::ostream& operator<<(std::ostream& out,Graph &g);
     };
 
 
