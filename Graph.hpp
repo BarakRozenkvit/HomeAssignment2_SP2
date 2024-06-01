@@ -1,6 +1,7 @@
 //// @author:314638669, Barak10101998@gmail.com
 #include <vector>
 #include <string>
+#include <iostream>
 #pragma once
 #define INF INT32_MAX
 
@@ -64,8 +65,9 @@ namespace ariel {
 
         Graph operator*(Graph &g1);
 
-        friend std::ostream& operator<<(std::ostream& out,Graph &g);
+        friend ostream& operator<<(ostream& out, Graph &g){
+            out << g.printGraph() << endl;
+            return out;
+        }
     };
-
-
 }

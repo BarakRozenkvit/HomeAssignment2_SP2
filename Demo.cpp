@@ -6,11 +6,9 @@
 #include "Graph.hpp"
 #include "Algorithms.hpp"
 using ariel::Algorithms;
-
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-using namespace std;
 
 int main() {
     ariel::Graph g1;

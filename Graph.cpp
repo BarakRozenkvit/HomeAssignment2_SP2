@@ -375,11 +375,6 @@ bool Graph::operator>(Graph &g){
     return false;
 }
 
-std::ostream& ariel::operator<<(std::ostream& out,Graph &g){
-    out << g.printGraph()<<endl;
-    return out;
-}
-
 
 
 
