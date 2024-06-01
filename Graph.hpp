@@ -17,7 +17,6 @@ namespace ariel {
 
 
     public:
-        // TODO: Intialization List
         Graph();
 
         void loadGraph(vector<vector<int>> graph);
