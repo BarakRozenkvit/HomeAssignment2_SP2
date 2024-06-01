@@ -12,9 +12,9 @@ namespace ariel {
     class Graph {
 
         vector<vector<int>> _adjMatrix;
-        int _edges = 0;
-        bool _isDirected = false;
-        bool _isNegativeEdges = false;
+        int _edges;
+        bool _isDirected;
+        bool _isNegativeEdges;
 
 
     public:
