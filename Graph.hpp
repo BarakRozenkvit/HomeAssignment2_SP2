@@ -18,7 +18,7 @@ namespace ariel {
 
 
     public:
-        Graph();
+        Graph(): _edges(0), _isDirected(false), _isNegativeEdges(false), _adjMatrix({}){};
 
         void loadGraph(vector<vector<int>> graph);
 
